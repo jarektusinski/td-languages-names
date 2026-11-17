@@ -1,9 +1,17 @@
 {
   "name": "td-languages-names",
-  "version": "1.0.2",
-  "description": "TypeScript/JavaScript library with 232 language names in English and in their native script (e.g. 日本語, Polski, العربية). Includes bidirectional maps and typed constants and language selectors.",
+  "version": "1.1.0",
+  "description": "TypeScript/JavaScript library with 232 language names in English and in their native script (for example 日本語, Polski, العربية). Includes bidirectional mappings, validation helpers, and typed language constants.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jarektusinski/td-languages-names.git"
+  },
+  "homepage": "https://github.com/jarektusinski/td-languages-names#readme",
+  "bugs": {
+    "url": "https://github.com/jarektusinski/td-languages-names/issues"
+  },
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts --clean",
     "prepublishOnly": "npm run build",
@@ -26,12 +34,13 @@
     "constants",
     "language-list",
     "endonym",
-    "exonym"
+    "exonym",
+    "language-data"
   ],
   "author": "Jarosław Tusiński",
   "license": "MIT",
   "devDependencies": {
-    "@types/jest": "^29.5.12",
+    "@types/jest": "^29.5.14",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "eslint": "^8.56.0",
