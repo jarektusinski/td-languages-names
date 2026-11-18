@@ -19,7 +19,11 @@ type LanguageName = LanguageEnglishName | LanguageNativeName;
  * @param name - Value to validate.
  * @returns `true` when the value is one of the supported English language names.
  */
-const isEnglishName = (name: any): boolean => ALL.includes(name);
+const isEnglishName = (name: any, caseSensitive: boolean): boolean => {
+  if (caseSensitive) return ALL.includes(name);
+  const lowerName = name.toLowerCase();
+  return ALL.some(n => n.toLowerCase() === lowerName);
+};
 
 /**
  * Checks whether a value is a known native language name.
@@ -27,7 +31,11 @@ const isEnglishName = (name: any): boolean => ALL.includes(name);
  * @param name - Value to validate.
  * @returns `true` when the value is one of the supported native language names.
  */
-const isNativeName = (name: any): boolean => NATIVES.includes(name);
+const isNativeName = (name: any, caseSensitive: boolean): boolean => {
+  if (caseSensitive) return NATIVES.includes(name);
+  const lowerName = name.toLowerCase();
+  return NATIVES.some(n => n.toLowerCase() === lowerName);
+};
 
 /**
  * Checks whether a value is either an English or native language name from this package.
@@ -35,7 +43,8 @@ const isNativeName = (name: any): boolean => NATIVES.includes(name);
  * @param name - Value to validate.
  * @returns `true` when the value matches a supported language name in either form.
  */
-const isLanguageName = (name: any): boolean => isEnglishName(name) || isNativeName(name);
+const isLanguageName = (name: any, caseSensitive: boolean): boolean =>
+  isEnglishName(name, caseSensitive) || isNativeName(name, caseSensitive);
 
 export type { LanguageEnglishName, LanguageNativeName, LanguageName };
 
