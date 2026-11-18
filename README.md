@@ -1,80 +1,125 @@
-# [TusinskiDev] Languages Names
+### [TusinskiDev] Languages Names
+# td-languages-names
 
-TypeScript library providing language names in English and in their native forms, with mapping utilities.
+TypeScript library providing language names in English and in their native forms, with ready-to-use mapping utilities and validation helpers.
+
+## Features
+
+- list of English names: `ALL` (readonly), `all`
+- list of native names: `NATIVES` (readonly), `natives`
+- constants for individual languages, for example `Languages.POLISH` and `Languages.POLISH_NATIVE`
+- English → native and native → English mapping via `toNative` and `toEnglish`
+- validation helpers: `isEnglishName`, `isNativeName`, and `isName`
+- typing support via `LanguageName`, `LanguageNativeName` and `LanguageNativeName`
+- total count of supported languages: `LANGUAGES_COUNT`
 
 ## Installation
 
-To install the project dependencies, run:
-
 ```bash
-npm install
+npm install td-languages-names
 ```
 
-## Running tests
+## Quick start
 
-After installing dependencies, you can run the tests with:
+```ts
+import Languages, { LanguageName, LanguageNativeName } from 'td-languages-names';
 
-```bash
-npm test
+console.log(Languages.POLISH); // "Polish"
+console.log(Languages.POLISH_NATIVE); // "Polski"
+console.log(Languages.toNative('Polish')); // "Polski"
+console.log(Languages.toEnglish('Polski')); // "Polish"
+console.log(Languages.LANGUAGES_COUNT); // 232
 ```
 
-## Available scripts
+## Available arrays and constants
 
-- `npm run build` — Compiles TypeScript to JavaScript in the `dist/` folder
-- `npm test` — Runs tests with Jest
-- `npm run lint` — Checks the code for lint errors
-- `npm run lint:fix` — Automatically fixes lint errors
-- `npm run format` — Formats the code using Prettier
-- `npm run format:check` — Checks code formatting
+```ts
+import Languages from 'td-languages-names';
 
-## Usage
+const { ALL, NATIVES, all, natives } = Languages;
 
-```typescript
-import Languages, {
-    LanguageName,
-    LanguageNativeName,
-} from 'td-languages-names';
-
-// Language names (English) and native names arrays
-const { LANGUAGES, LANGUAGES_NATIVES } = Languages;
-console.log(LANGUAGES[0]);        // e.g. "Acehnese"
-console.log(LANGUAGES_NATIVES[0]); // e.g. "Bahsa Acèh"
-
-// Individual constants (spread from Names and NativeNames)
-console.log(Languages.POLISH);           // "Polish"
-console.log(Languages.POLISH_NATIVE);    // "Polski"
-
-// Mapping: English name → native name
-const { mapLanguageToNative, LANGUAGES_TO_NATIVES } = Languages;
-console.log(mapLanguageToNative('Polish'));  // "Polski"
-console.log(LANGUAGES_TO_NATIVES['Japanese']); // "日本語"
-
-// Mapping: native name → English name
-const { mapNativeToLanguages, NATIVES_TO_LANGUAGES } = Languages;
-console.log(mapNativeToLanguages('Polski'));  // "Polish"
-console.log(NATIVES_TO_LANGUAGES['日本語']);   // "Japanese"
-
-// Using types
-const myLanguage: LanguageName = 'German';
-const nativeName: LanguageNativeName = Languages.mapLanguageToNative(myLanguage);
+console.log(ALL.length); // 232
+console.log(ALL[0]); // "Acehnese"
+console.log(all[0]); // "Acehnese"
+console.log(NATIVES[0]); // "Bahsa Acèh"
+console.log(natives[0]); // "Bahsa Acèh"
 ```
 
-## Project structure
+## Examples with individual language entries
 
+```ts
+import Languages from 'td-languages-names';
+
+console.log(Languages.ENGLISH); // "English"
+console.log(Languages.ENGLISH_NATIVE); // "English"
+console.log(Languages.JAPANESE); // "Japanese"
+console.log(Languages.JAPANESE_NATIVE); // "日本語"
+console.log(Languages.GERMAN); // "German"
+console.log(Languages.GERMAN_NATIVE); // "Deutsch"
 ```
-LanguagesNamesLib/
-├── src/
-│   ├── index.ts        # Main entry point; re-exports names, native names, maps, and types
-│   ├── names.ts        # English language name constants
-│   ├── nativeNames.ts  # Native language name constants
-│   ├── maps.ts         # language ↔ native name mappings and mapper functions
-│   ├── types.ts        # LANGUAGES, LANGUAGES_NATIVES arrays and TypeScript types
-│   └── test.ts         # Test utilities or additional tests
-├── package.json
-├── tsconfig.json
-├── jest.config.js
-└── README.md
+
+## English → native mapping
+
+```ts
+import Languages from 'td-languages-names';
+
+console.log(Languages.toNative('Japanese')); // "日本語"
+console.log(Languages.toNative('Polish')); // "Polski"
+console.log(Languages.toNative('German')); // "Deutsch"
+```
+
+## Native → English mapping
+
+```ts
+import Languages from 'td-languages-names';
+
+console.log(Languages.toEnglish('日本語')); // "Japanese"
+console.log(Languages.toEnglish('Polski')); // "Polish"
+console.log(Languages.toEnglish('Deutsch')); // "German"
+```
+
+## Raw mapping objects
+
+```ts
+import Languages from 'td-languages-names';
+
+console.log(Languages.ENGLISH_TO_NATIVE_NAMES_VO.Japanese); // "日本語"
+console.log(Languages.ENGLISH_TO_NATIVE_NAMES_VO.Polish); // "Polski"
+console.log(Languages.NATIVE_TO_ENGLISH_NAMES_VO['日本語']); // "Japanese"
+console.log(Languages.NATIVE_TO_ENGLISH_NAMES_VO['Polski']); // "Polish"
+```
+
+## Validation helpers
+
+```ts
+import Languages from 'td-languages-names';
+
+console.log(Languages.isEnglishName('Polish')); // true
+console.log(Languages.isNativeName('Polish')); // false
+console.log(Languages.isNativeName('Polski')); // true
+console.log(Languages.isName('Polski')); // true
+console.log(Languages.isName('Not a language')); // false
+```
+
+## TypeScript usage
+
+```ts
+import Languages, { LanguageName } from 'td-languages-names';
+
+const slavicLanguages: LanguageName[] = ['Polish', 'Czech', 'Slovak', 'Croatian', 'Serbian'];
+const selectOptions = slavicLanguages.map((lang) => ({ 
+    value: Languages.toNative(lang)),
+    name: lang,
+});
+
+console.log(selectOptions);
+// [{name: "Polish", value: "Polski"}, {name: "Czech", value: "Čeština"}, ...]
 ```
 
 ## License
+
 MIT
+
+## Author
+
+[Jarosław Tusiński](https://github.com/jarektusinski)
